@@ -5,14 +5,16 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace RestourantAPI.Models
+namespace RestaurantAPI.Models
 {
     public class FoodItem
     {
         [Key]
         public int FoodItemId { get; set; }
 
-        [Column(TypeName = "nvarchar(100)")] public string name { get; set; }
+        [Column(TypeName ="nvarchar(100)")]
+        public string FoodItemName { get; set; }
+
         public decimal Price { get; set; }
     }
 }

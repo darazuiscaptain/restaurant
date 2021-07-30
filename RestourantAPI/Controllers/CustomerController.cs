@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using RestaurantAPI.Models;
 using RestourantAPI.Models;
 
 namespace RestourantAPI.Controllers
@@ -46,7 +47,7 @@ namespace RestourantAPI.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCustomer(int id, Customer customer)
         {
-            if (id != customer.CustomerId)
+            if (id != customer.CustomerID)
             {
                 return BadRequest();
             }
@@ -80,7 +81,7 @@ namespace RestourantAPI.Controllers
             _context.Customers.Add(customer);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetCustomer", new { id = customer.CustomerId }, customer);
+            return CreatedAtAction("GetCustomer", new { id = customer.CustomerID }, customer);
         }
 
         // DELETE: api/Customer/5
@@ -101,7 +102,7 @@ namespace RestourantAPI.Controllers
 
         private bool CustomerExists(int id)
         {
-            return _context.Customers.Any(e => e.CustomerId == id);
+            return _context.Customers.Any(e => e.CustomerID == id);
         }
     }
 }

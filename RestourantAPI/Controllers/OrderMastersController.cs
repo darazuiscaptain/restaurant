@@ -12,47 +12,47 @@ namespace RestourantAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class FoodItemController : ControllerBase
+    public class OrderMastersController : ControllerBase
     {
         private readonly RestourantDbContext _context;
 
-        public FoodItemController(RestourantDbContext context)
+        public OrderMastersController(RestourantDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/FoodItem
+        // GET: api/OrderMasters
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<FoodItem>>> GetFoodItems()
+        public async Task<ActionResult<IEnumerable<OrderMaster>>> GetOrderMasters()
         {
-            return await _context.FoodItems.ToListAsync();
+            return await _context.OrderMasters.ToListAsync();
         }
 
-        // GET: api/FoodItem/5
+        // GET: api/OrderMasters/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<FoodItem>> GetFoodItem(int id)
+        public async Task<ActionResult<OrderMaster>> GetOrderMaster(long id)
         {
-            var foodItem = await _context.FoodItems.FindAsync(id);
+            var orderMaster = await _context.OrderMasters.FindAsync(id);
 
-            if (foodItem == null)
+            if (orderMaster == null)
             {
                 return NotFound();
             }
 
-            return foodItem;
+            return orderMaster;
         }
 
-        // PUT: api/FoodItem/5
+        // PUT: api/OrderMasters/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutFoodItem(int id, FoodItem foodItem)
+        public async Task<IActionResult> PutOrderMaster(long id, OrderMaster orderMaster)
         {
-            if (id != foodItem.FoodItemId)
+            if (id != orderMaster.OrderMasterId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(foodItem).State = EntityState.Modified;
+            _context.Entry(orderMaster).State = EntityState.Modified;
 
             try
             {
@@ -60,7 +60,7 @@ namespace RestourantAPI.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!FoodItemExists(id))
+                if (!OrderMasterExists(id))
                 {
                     return NotFound();
                 }
@@ -73,36 +73,36 @@ namespace RestourantAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/FoodItem
+        // POST: api/OrderMasters
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<FoodItem>> PostFoodItem(FoodItem foodItem)
+        public async Task<ActionResult<OrderMaster>> PostOrderMaster(OrderMaster orderMaster)
         {
-            _context.FoodItems.Add(foodItem);
+            _context.OrderMasters.Add(orderMaster);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetFoodItem", new { id = foodItem.FoodItemId }, foodItem);
+            return CreatedAtAction("GetOrderMaster", new { id = orderMaster.OrderMasterId }, orderMaster);
         }
 
-        // DELETE: api/FoodItem/5
+        // DELETE: api/OrderMasters/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteFoodItem(int id)
+        public async Task<IActionResult> DeleteOrderMaster(long id)
         {
-            var foodItem = await _context.FoodItems.FindAsync(id);
-            if (foodItem == null)
+            var orderMaster = await _context.OrderMasters.FindAsync(id);
+            if (orderMaster == null)
             {
                 return NotFound();
             }
 
-            _context.FoodItems.Remove(foodItem);
+            _context.OrderMasters.Remove(orderMaster);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool FoodItemExists(int id)
+        private bool OrderMasterExists(long id)
         {
-            return _context.FoodItems.Any(e => e.FoodItemId == id);
+            return _context.OrderMasters.Any(e => e.OrderMasterId == id);
         }
     }
 }
