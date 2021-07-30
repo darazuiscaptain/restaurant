@@ -1,4 +1,3 @@
-  
 import React, { useState } from 'react'
 
 export function useForm(getFreshModelObject) {
@@ -28,3 +27,4 @@ export function useForm(getFreshModelObject) {
         resetFormControls
     }
 }
+
