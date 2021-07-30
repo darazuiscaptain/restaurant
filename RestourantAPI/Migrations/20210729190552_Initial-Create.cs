@@ -10,13 +10,13 @@ namespace RestourantAPI.Migrations
                 name: "Customers",
                 columns: table => new
                 {
-                    CustomerId = table.Column<int>(type: "int", nullable: false)
+                    CustomerID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(100)", nullable: true)
+                    CustomerName = table.Column<string>(type: "nvarchar(100)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Customers", x => x.CustomerId);
+                    table.PrimaryKey("PK_Customers", x => x.CustomerID);
                 });
 
             migrationBuilder.CreateTable(
@@ -25,7 +25,7 @@ namespace RestourantAPI.Migrations
                 {
                     FoodItemId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    name = table.Column<string>(type: "nvarchar(100)", nullable: true),
+                    FoodItemName = table.Column<string>(type: "nvarchar(100)", nullable: true),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
                 },
                 constraints: table =>
@@ -39,10 +39,10 @@ namespace RestourantAPI.Migrations
                 {
                     OrderMasterId = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    OrderNumber = table.Column<string>(type: "nvarchar(100)", nullable: true),
+                    OrderNumber = table.Column<string>(type: "nvarchar(75)", nullable: true),
                     CustomerId = table.Column<int>(type: "int", nullable: false),
-                    PMethod = table.Column<string>(type: "nvarchar(100)", nullable: true),
-                    GTotatl = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                    PMethod = table.Column<string>(type: "nvarchar(10)", nullable: true),
+                    GTotal = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -51,7 +51,7 @@ namespace RestourantAPI.Migrations
                         name: "FK_OrderMasters_Customers_CustomerId",
                         column: x => x.CustomerId,
                         principalTable: "Customers",
-                        principalColumn: "CustomerId",
+                        principalColumn: "CustomerID",
                         onDelete: ReferentialAction.Cascade);
                 });
 

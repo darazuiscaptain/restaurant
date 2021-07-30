@@ -5,53 +5,54 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using RestaurantAPI.Models;
 using RestourantAPI.Models;
 
 namespace RestourantAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class OrderMasterController : ControllerBase
+    public class OrderDetailController : ControllerBase
     {
         private readonly RestourantDbContext _context;
 
-        public OrderMasterController(RestourantDbContext context)
+        public OrderDetailController(RestourantDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/OrderMaster
+        // GET: api/OrderDetail
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<OrderMaster>>> GetOrderMasters()
+        public async Task<ActionResult<IEnumerable<OrderDetail>>> GetOrderDetails()
         {
-            return await _context.OrderMasters.ToListAsync();
+            return await _context.OrderDetails.ToListAsync();
         }
 
-        // GET: api/OrderMaster/5
+        // GET: api/OrderDetail/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<OrderMaster>> GetOrderMaster(long id)
+        public async Task<ActionResult<OrderDetail>> GetOrderDetail(long id)
         {
-            var orderMaster = await _context.OrderMasters.FindAsync(id);
+            var orderDetail = await _context.OrderDetails.FindAsync(id);
 
-            if (orderMaster == null)
+            if (orderDetail == null)
             {
                 return NotFound();
             }
 
-            return orderMaster;
+            return orderDetail;
         }
 
-        // PUT: api/OrderMaster/5
+        // PUT: api/OrderDetail/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutOrderMaster(long id, OrderMaster orderMaster)
+        public async Task<IActionResult> PutOrderDetail(long id, OrderDetail orderDetail)
         {
-            if (id != orderMaster.OrderMasterId)
+            if (id != orderDetail.OrderDetailId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(orderMaster).State = EntityState.Modified;
+            _context.Entry(orderDetail).State = EntityState.Modified;
 
             try
             {
@@ -59,7 +60,7 @@ namespace RestourantAPI.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!OrderMasterExists(id))
+                if (!OrderDetailExists(id))
                 {
                     return NotFound();
                 }
@@ -72,36 +73,36 @@ namespace RestourantAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/OrderMaster
+        // POST: api/OrderDetail
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<OrderMaster>> PostOrderMaster(OrderMaster orderMaster)
+        public async Task<ActionResult<OrderDetail>> PostOrderDetail(OrderDetail orderDetail)
         {
-            _context.OrderMasters.Add(orderMaster);
+            _context.OrderDetails.Add(orderDetail);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetOrderMaster", new { id = orderMaster.OrderMasterId }, orderMaster);
+            return CreatedAtAction("GetOrderDetail", new { id = orderDetail.OrderDetailId }, orderDetail);
         }
 
-        // DELETE: api/OrderMaster/5
+        // DELETE: api/OrderDetail/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteOrderMaster(long id)
+        public async Task<IActionResult> DeleteOrderDetail(long id)
         {
-            var orderMaster = await _context.OrderMasters.FindAsync(id);
-            if (orderMaster == null)
+            var orderDetail = await _context.OrderDetails.FindAsync(id);
+            if (orderDetail == null)
             {
                 return NotFound();
             }
 
-            _context.OrderMasters.Remove(orderMaster);
+            _context.OrderDetails.Remove(orderDetail);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool OrderMasterExists(long id)
+        private bool OrderDetailExists(long id)
         {
-            return _context.OrderMasters.Any(e => e.OrderMasterId == id);
+            return _context.OrderDetails.Any(e => e.OrderDetailId == id);
         }
     }
 }

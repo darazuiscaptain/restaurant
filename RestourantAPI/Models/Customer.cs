@@ -5,14 +5,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace RestourantAPI.Models
+namespace RestaurantAPI.Models
 {
     public class Customer
     {
         [Key]
-        public int CustomerId { get; set; }
-        
-        [Column(TypeName = "nvarchar(100)")]
-        public string Name { get; set; }
+        public int CustomerID { get; set; }
+
+        [Column(TypeName ="nvarchar(100)")]
+        public string CustomerName { get; set; }
     }
 }

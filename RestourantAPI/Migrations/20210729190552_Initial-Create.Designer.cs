@@ -9,7 +9,7 @@ using RestourantAPI.Models;
 namespace RestourantAPI.Migrations
 {
     [DbContext(typeof(RestourantDbContext))]
-    [Migration("20210726101649_Initial Create")]
+    [Migration("20210729190552_Initial-Create")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -20,40 +20,40 @@ namespace RestourantAPI.Migrations
                 .HasAnnotation("ProductVersion", "5.0.8")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("RestourantAPI.Models.Customer", b =>
+            modelBuilder.Entity("RestaurantAPI.Models.Customer", b =>
                 {
-                    b.Property<int>("CustomerId")
+                    b.Property<int>("CustomerID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Name")
+                    b.Property<string>("CustomerName")
                         .HasColumnType("nvarchar(100)");
 
-                    b.HasKey("CustomerId");
+                    b.HasKey("CustomerID");
 
                     b.ToTable("Customers");
                 });
 
-            modelBuilder.Entity("RestourantAPI.Models.FoodItem", b =>
+            modelBuilder.Entity("RestaurantAPI.Models.FoodItem", b =>
                 {
                     b.Property<int>("FoodItemId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("FoodItemName")
+                        .HasColumnType("nvarchar(100)");
+
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("name")
-                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("FoodItemId");
 
                     b.ToTable("FoodItems");
                 });
 
-            modelBuilder.Entity("RestourantAPI.Models.OrderDetail", b =>
+            modelBuilder.Entity("RestaurantAPI.Models.OrderDetail", b =>
                 {
                     b.Property<long>("OrderDetailId")
                         .ValueGeneratedOnAdd()
@@ -81,7 +81,7 @@ namespace RestourantAPI.Migrations
                     b.ToTable("OrderDetails");
                 });
 
-            modelBuilder.Entity("RestourantAPI.Models.OrderMaster", b =>
+            modelBuilder.Entity("RestaurantAPI.Models.OrderMaster", b =>
                 {
                     b.Property<long>("OrderMasterId")
                         .ValueGeneratedOnAdd()
@@ -91,14 +91,14 @@ namespace RestourantAPI.Migrations
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("GTotatl")
+                    b.Property<decimal>("GTotal")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("OrderNumber")
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(75)");
 
                     b.Property<string>("PMethod")
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(10)");
 
                     b.HasKey("OrderMasterId");
 
@@ -107,15 +107,15 @@ namespace RestourantAPI.Migrations
                     b.ToTable("OrderMasters");
                 });
 
-            modelBuilder.Entity("RestourantAPI.Models.OrderDetail", b =>
+            modelBuilder.Entity("RestaurantAPI.Models.OrderDetail", b =>
                 {
-                    b.HasOne("RestourantAPI.Models.FoodItem", "FoodItem")
+                    b.HasOne("RestaurantAPI.Models.FoodItem", "FoodItem")
                         .WithMany()
                         .HasForeignKey("FoodItemId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("RestourantAPI.Models.OrderMaster", null)
+                    b.HasOne("RestaurantAPI.Models.OrderMaster", null)
                         .WithMany("OrderDetails")
                         .HasForeignKey("OrderMasterId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -124,9 +124,9 @@ namespace RestourantAPI.Migrations
                     b.Navigation("FoodItem");
                 });
 
-            modelBuilder.Entity("RestourantAPI.Models.OrderMaster", b =>
+            modelBuilder.Entity("RestaurantAPI.Models.OrderMaster", b =>
                 {
-                    b.HasOne("RestourantAPI.Models.Customer", "Customer")
+                    b.HasOne("RestaurantAPI.Models.Customer", "Customer")
                         .WithMany()
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -135,7 +135,7 @@ namespace RestourantAPI.Migrations
                     b.Navigation("Customer");
                 });
 
-            modelBuilder.Entity("RestourantAPI.Models.OrderMaster", b =>
+            modelBuilder.Entity("RestaurantAPI.Models.OrderMaster", b =>
                 {
                     b.Navigation("OrderDetails");
                 });

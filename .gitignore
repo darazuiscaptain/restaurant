@@ -1,5 +1,6 @@
 .log
 .bin
+.sln
 .vs/
 RestourantAPI/obj
 RestourantAPI/bin
